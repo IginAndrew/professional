@@ -14,7 +14,7 @@ dict_total_my = {}
 one = []
 two = []
 three = []
-str_key = ''
+str_key = ""
 
 for i in range(0, 170):
     org = dict_total["Организация"][i]
@@ -37,39 +37,38 @@ for i in range(0, 170):
     # print(exemple_one)
 
     if exemple_one:
-        one_re = exemple_one[0][str(exemple_one).index(" ")-1:]
+        one_re = exemple_one[0][str(exemple_one).index(" ") - 1 :]
         one.append(one_re)
         dict_total_my[one[-1]] = {}
-        str_key = 'one'
+        str_key = "one"
 
     elif exemple_two:
-        two_re = exemple_two[-1][str(exemple_two).index(" ")-1:]
+        two_re = exemple_two[-1][str(exemple_two).index(" ") - 1 :]
         two.append(two_re)
         dict_total_my[one[-1]][two[-1]] = {}
-        str_key = 'two'
+        str_key = "two"
 
     elif exemple_free:
-        three_re = exemple_free[0][str(exemple_free).index(" ")-1:]
+        three_re = exemple_free[0][str(exemple_free).index(" ") - 1 :]
         three.append(three_re)
         dict_total_my[one[-1]][two[-1]][three[-1]] = {}
-        str_key = 'three'
+        str_key = "three"
 
     else:
-        if str_key == 'one':
+        if str_key == "one":
             if org not in dict_total_my[one[-1]].keys():
                 dict_total_my[one[-1]][org] = [my_dict_value]
             else:
                 dict_total_my[one[-1]][org] += [my_dict_value]
-        elif str_key == 'two':
+        elif str_key == "two":
             if org not in dict_total_my[one[-1]][two[-1]].keys():
                 dict_total_my[one[-1]][two[-1]][org] = [my_dict_value]
             else:
                 dict_total_my[one[-1]][two[-1]][org] += [my_dict_value]
-        elif str_key == 'three':
+        elif str_key == "three":
             if org not in dict_total_my[one[-1]][two[-1]][three[-1]].keys():
                 dict_total_my[one[-1]][two[-1]][three[-1]][org] = [my_dict_value]
             else:
                 dict_total_my[one[-1]][two[-1]][three[-1]][org] += [my_dict_value]
 
 pprint(dict_total_my)
-
