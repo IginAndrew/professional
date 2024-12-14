@@ -229,18 +229,19 @@ def user_insert(
         print("Ошибка при работе sql user_insert", error)
 
 
-# ------------------------------------
-def create_tables_info_date():
+# ------------------------------------------------------
+def create_tables_date():
     con = get_connection()
     with con:
         c = con.cursor()
         c.execute(
             """
-        CREATE TABLE IF NOT EXISTS Info_date (
-            id INTEGER NOT NULL PRIMARY KEY,
-            name TEXT
-        );
-        """
+                CREATE TABLE IF NOT EXISTS WorkingCalendar(
+                    Id INTEGER NOT NULL PRIMARY KEY,
+                    ExceptionDate DATE,
+                    IsWorkingDay TEXT
+                );
+                """
         )
         con.commit()
 
@@ -253,16 +254,38 @@ def create_tables_id_info_date_id_user():
             """
         CREATE TABLE IF NOT EXISTS Id_info_date_id_user (
             id INTEGER NOT NULL PRIMARY KEY,
-            id_info_date INTEGER,
             id_user INTEGER,
             id_date INTEGER,
-            FOREIGN KEY (id_info_date) REFERENCES Info_date(id),
             FOREIGN KEY (id_user) REFERENCES User(id),
-            FOREIGN KEY (id_date) REFERENCES Date(id)
+            FOREIGN KEY (id_date) REFERENCES WorkingCalendar(Id)
         );
         """
         )
         con.commit()
+
+
+def tables_date_insert(Id, ExceptionDate, IsWorkingDay):
+    try:
+        con = get_connection()
+        with con:
+            c = con.cursor()
+        c.execute(
+            """
+                  INSERT INTO WorkingCalendar (Id, ExceptionDate, IsWorkingDay) values
+                  (?,?,?);
+                  """,
+            (
+                Id,
+                ExceptionDate,
+                IsWorkingDay,
+            ),
+        )
+        con.commit()
+    except sqlite3.Error as error:
+        print("Ошибка при работе sql tables_date_insert", error)
+
+
+# -------------------------------------------------------------
 
 
 def create_tables_helper():
@@ -299,20 +322,7 @@ def create_tables_id_helper_id_user():
         con.commit()
 
 
-def create_tables_date():
-    con = get_connection()
-    with con:
-        c = con.cursor()
-        c.execute(
-            """
-                CREATE TABLE IF NOT EXISTS Date (
-                    id INTEGER NOT NULL PRIMARY KEY,
-                    date TEXT,
-                    info TEXT
-                );
-                """
-        )
-        con.commit()
+# ----------------------------------------------------
 
 
 if __name__ == "__main__":
@@ -322,8 +332,7 @@ if __name__ == "__main__":
     create_tables_management()
     create_tables_post()
     create_tables_user()
-    create_tables_info_date()
+    create_tables_date()
     create_tables_id_info_date_id_user()
     create_tables_helper()
     create_tables_id_helper_id_user()
-    create_tables_date()
