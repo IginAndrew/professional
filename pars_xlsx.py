@@ -3,6 +3,7 @@ from pprint import pprint
 
 from pandas import *
 
+from db import department_insert, mini_department_insert, management_insert
 
 xls = ExcelFile("org_struct.xlsx")
 df = xls.parse(xls.sheet_names[0])
@@ -12,8 +13,11 @@ dict_total = df.to_dict()
 dict_total_my = {}
 
 one = []
+one_id = []
 two = []
+two_id = []
 three = []
+three_id = []
 str_key = ""
 
 for i in range(0, 170):
@@ -39,20 +43,26 @@ for i in range(0, 170):
     if exemple_one:
         one_re = exemple_one[0][str(exemple_one).index(" ") - 1 :]
         one.append(one_re)
+        one_id.append(i + 1)
         dict_total_my[one[-1]] = {}
         str_key = "one"
+        department_insert(one_id[-1], one[-1])
 
     elif exemple_two:
         two_re = exemple_two[-1][str(exemple_two).index(" ") - 1 :]
         two.append(two_re)
+        two_id.append(i + 1)
         dict_total_my[one[-1]][two[-1]] = {}
         str_key = "two"
+        mini_department_insert(two_id[-1], two[-1], one_id[-1])
 
     elif exemple_free:
         three_re = exemple_free[0][str(exemple_free).index(" ") - 1 :]
         three.append(three_re)
+        three_id.append(i + 1)
         dict_total_my[one[-1]][two[-1]][three[-1]] = {}
         str_key = "three"
+        management_insert(three_id[-1], three[-1], two_id[-1])
 
     else:
         if str_key == "one":

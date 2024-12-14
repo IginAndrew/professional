@@ -3,7 +3,7 @@ import sqlite3
 
 def get_connection():
     try:
-        con = sqlite3.connect('base.db')
+        con = sqlite3.connect("base.db")
         con.row_factory = sqlite3.Row
         print("Успешное подключение!")
         return con
@@ -15,20 +15,46 @@ def create_tables_department():
     con = get_connection()
     with con:
         c = con.cursor()
-        c.execute('''
+        c.execute(
+            """
         CREATE TABLE IF NOT EXISTS Department (
             id INTEGER NOT NULL UNIQUE PRIMARY KEY,
             name TEXT NOT NULL UNIQUE
         );
-        ''')
+        """
+        )
         con.commit()
+
+
+def department_insert(id, name):
+    try:
+        con = get_connection()
+        with con:
+            c = con.cursor()
+        c.execute(
+            """
+                  INSERT INTO Department (id, name) values
+                  (?,?);
+                  """,
+            (
+                id,
+                name,
+            ),
+        )
+        con.commit()
+    except sqlite3.Error as error:
+        print("Ошибка при работе sql department_insert", error)
+
+
+# ----------------------------------------------------------------------------------------------------
 
 
 def create_tables_mini_department():
     con = get_connection()
     with con:
         c = con.cursor()
-        c.execute('''
+        c.execute(
+            """
         CREATE TABLE IF NOT EXISTS Mini_department (
             id INTEGER NOT NULL UNIQUE PRIMARY KEY,
             name TEXT UNIQUE,
@@ -36,15 +62,41 @@ def create_tables_mini_department():
             FOREIGN KEY (id_department) REFERENCES Department(id)
             ON UPDATE NO ACTION ON DELETE NO ACTION
         );
-        ''')
+        """
+        )
         con.commit()
+
+
+def mini_department_insert(id, name, id_department):
+    try:
+        con = get_connection()
+        with con:
+            c = con.cursor()
+        c.execute(
+            """
+                  INSERT INTO Mini_department (id, name, id_department) values
+                  (?,?,?);
+                  """,
+            (
+                id,
+                name,
+                id_department,
+            ),
+        )
+        con.commit()
+    except sqlite3.Error as error:
+        print("Ошибка при работе sql mini_department_insert", error)
+
+
+# -----------------------------------------------------------------------------
 
 
 def create_tables_management():
     con = get_connection()
     with con:
         c = con.cursor()
-        c.execute('''
+        c.execute(
+            """
         CREATE TABLE IF NOT EXISTS Management (
             id INTEGER NOT NULL UNIQUE PRIMARY KEY,
             name TEXT UNIQUE,
@@ -52,15 +104,39 @@ def create_tables_management():
             FOREIGN KEY (id_mini_departament) REFERENCES Mini_department(id)
             ON UPDATE NO ACTION ON DELETE NO ACTION
         );
-        ''')
+        """
+        )
         con.commit()
 
 
+def management_insert(id, name, id_mini_departament):
+    try:
+        con = get_connection()
+        with con:
+            c = con.cursor()
+        c.execute(
+            """
+                  INSERT INTO Management (id, name, id_mini_departament) values
+                  (?,?,?);
+                  """,
+            (
+                id,
+                name,
+                id_mini_departament,
+            ),
+        )
+        con.commit()
+    except sqlite3.Error as error:
+        print("Ошибка при работе sql management_insert", error)
+
+
+# -------------------------------------
 def create_tables_post():
     con = get_connection()
     with con:
         c = con.cursor()
-        c.execute('''
+        c.execute(
+            """
         CREATE TABLE IF NOT EXISTS Post (
             id INTEGER NOT NULL UNIQUE PRIMARY KEY,
             name TEXT UNIQUE,
@@ -75,15 +151,18 @@ def create_tables_post():
             FOREIGN KEY (id_management) REFERENCES Management(id)
             ON UPDATE NO ACTION ON DELETE NO ACTION
         );
-        ''')
+        """
+        )
         con.commit()
 
+# ----------------------------------------------------------------------
 
 def create_tables_user():
     con = get_connection()
     with con:
         c = con.cursor()
-        c.execute('''
+        c.execute(
+            """
         CREATE TABLE IF NOT EXISTS User (
             id INTEGER NOT NULL UNIQUE PRIMARY KEY,
             name TEXT NOT NULL,
@@ -96,7 +175,8 @@ def create_tables_user():
             FOREIGN KEY (id_post) REFERENCES Post(id)
             ON UPDATE NO ACTION ON DELETE NO ACTION
         );
-        ''')
+        """
+        )
         con.commit()
 
 
@@ -104,12 +184,14 @@ def create_tables_info_date():
     con = get_connection()
     with con:
         c = con.cursor()
-        c.execute('''
+        c.execute(
+            """
         CREATE TABLE IF NOT EXISTS Info_date (
             id INTEGER NOT NULL UNIQUE PRIMARY KEY,
             name TEXT
         );
-        ''')
+        """
+        )
         con.commit()
 
 
@@ -117,7 +199,8 @@ def create_tables_id_info_date_id_user():
     con = get_connection()
     with con:
         c = con.cursor()
-        c.execute('''
+        c.execute(
+            """
         CREATE TABLE IF NOT EXISTS Id_info_date_id_user (
             id INTEGER NOT NULL UNIQUE PRIMARY KEY,
             id_info_date INTEGER,
@@ -130,7 +213,8 @@ def create_tables_id_info_date_id_user():
             FOREIGN KEY (id_date) REFERENCES Date(id)
             ON UPDATE NO ACTION ON DELETE NO ACTION
         );
-        ''')
+        """
+        )
         con.commit()
 
 
@@ -139,19 +223,23 @@ def create_tables_helper():
     with con:
         c = con.cursor()
 
-        c.execute('''
+        c.execute(
+            """
                 CREATE TABLE IF NOT EXISTS Helper (
                     id INTEGER NOT NULL UNIQUE PRIMARY KEY,
                     name TEXT
                 );
-                ''')
+                """
+        )
         con.commit()
+
 
 def create_tables_id_helper_id_user():
     con = get_connection()
     with con:
         c = con.cursor()
-        c.execute('''
+        c.execute(
+            """
             CREATE TABLE IF NOT EXISTS Id_helper_id_user (
                     id INTEGER NOT NULL UNIQUE PRIMARY KEY,
                     id_helper INTEGER,
@@ -161,29 +249,36 @@ def create_tables_id_helper_id_user():
                     FOREIGN KEY (id_user) REFERENCES User(id)
                     ON UPDATE NO ACTION ON DELETE NO ACTION
                 );
-                ''')
+                """
+        )
         con.commit()
+
 
 def create_tables_date():
     con = get_connection()
     with con:
         c = con.cursor()
-        c.execute('''
+        c.execute(
+            """
                 CREATE TABLE IF NOT EXISTS Date (
                     id INTEGER NOT NULL UNIQUE PRIMARY KEY,
                     date TEXT,
                     info TEXT
                 );
-                ''')
+                """
+        )
         con.commit()
 
-# create_tables_department()
-# create_tables_mini_department()
-# create_tables_management()
-# create_tables_post()
-# create_tables_user()
-# create_tables_info_date()
-# create_tables_id_info_date_id_user()
-# create_tables_helper()
-# create_tables_id_helper_id_user()
-# create_tables_date()
+
+if __name__ == "__main__":
+    pass
+    # create_tables_department()
+    # create_tables_mini_department()
+    # create_tables_management()
+    # create_tables_post()
+    # create_tables_user()
+    # create_tables_info_date()
+    # create_tables_id_info_date_id_user()
+    # create_tables_helper()
+    # create_tables_id_helper_id_user()
+    # create_tables_date()
