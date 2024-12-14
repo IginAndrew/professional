@@ -3,7 +3,13 @@ from pprint import pprint
 
 from pandas import *
 
-from db import department_insert, mini_department_insert, management_insert
+from db import (
+    department_insert,
+    mini_department_insert,
+    management_insert,
+    post_insert,
+    user_insert,
+)
 
 xls = ExcelFile("org_struct.xlsx")
 df = xls.parse(xls.sheet_names[0])
@@ -18,6 +24,7 @@ two = []
 two_id = []
 three = []
 three_id = []
+post_id = []
 str_key = ""
 
 for i in range(0, 170):
@@ -37,8 +44,6 @@ for i in range(0, 170):
     exemple_one = re.findall(r"^\d{,2}\.\s\D+", org)
     exemple_two = re.findall(r"^\d{,2}\.\d{,1}\.\s\D+", org)
     exemple_free = re.findall(r"^\d{,2}\.\d{,1}\.\d{,1}\.\s\D+", org)
-
-    # print(exemple_one)
 
     if exemple_one:
         one_re = exemple_one[0][str(exemple_one).index(" ") - 1 :]
@@ -68,17 +73,42 @@ for i in range(0, 170):
         if str_key == "one":
             if org not in dict_total_my[one[-1]].keys():
                 dict_total_my[one[-1]][org] = [my_dict_value]
+                post_id.append(i + 1)
+                post_insert(id=post_id[-1], name=org, id_department=one_id[-1])
             else:
                 dict_total_my[one[-1]][org] += [my_dict_value]
+
         elif str_key == "two":
             if org not in dict_total_my[one[-1]][two[-1]].keys():
                 dict_total_my[one[-1]][two[-1]][org] = [my_dict_value]
+                post_id.append(i + 1)
+                post_insert(
+                    id=post_id[-1],
+                    name=org,
+                    id_mini_departament=two_id[-1],
+                )
+
             else:
                 dict_total_my[one[-1]][two[-1]][org] += [my_dict_value]
+
         elif str_key == "three":
             if org not in dict_total_my[one[-1]][two[-1]][three[-1]].keys():
                 dict_total_my[one[-1]][two[-1]][three[-1]][org] = [my_dict_value]
+                post_id.append(i + 1)
+                post_insert(id=post_id[-1], name=org, id_management=three_id[-1])
+
             else:
                 dict_total_my[one[-1]][two[-1]][three[-1]][org] += [my_dict_value]
+
+        user_insert(
+            id=i + 1,
+            name=name,
+            id_post=post_id[-1],
+            birthday=str(birthday),
+            phonenumber=str(phone),
+            room=str(kabinet),
+            email=email,
+        )
+
 
 pprint(dict_total_my)
