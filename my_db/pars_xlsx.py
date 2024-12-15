@@ -3,15 +3,9 @@ from pprint import pprint
 
 from pandas import *
 
-from db import (
-    department_insert,
-    mini_department_insert,
-    management_insert,
-    post_insert,
-    user_insert,
-)
+from my_db.db import department_insert, mini_department_insert, management_insert, post_insert, user_insert
 
-xls = ExcelFile("org_struct.xlsx")
+xls = ExcelFile("my_db/org_struct.xlsx")
 df = xls.parse(xls.sheet_names[0])
 dict_total = df.to_dict()
 
@@ -51,7 +45,7 @@ for i in range(0, 170):
         one_id.append(i + 1)
         dict_total_my[one[-1]] = {}
         str_key = "one"
-        department_insert(one_id[-1], one[-1])
+        department_insert(one_id[-1], one[-1])#db
 
     elif exemple_two:
         two_re = exemple_two[-1][str(exemple_two).index(" ") - 1 :]
@@ -59,7 +53,7 @@ for i in range(0, 170):
         two_id.append(i + 1)
         dict_total_my[one[-1]][two[-1]] = {}
         str_key = "two"
-        mini_department_insert(two_id[-1], two[-1], one_id[-1])
+        mini_department_insert(two_id[-1], two[-1], one_id[-1])#db
 
     elif exemple_free:
         three_re = exemple_free[0][str(exemple_free).index(" ") - 1 :]
@@ -67,14 +61,14 @@ for i in range(0, 170):
         three_id.append(i + 1)
         dict_total_my[one[-1]][two[-1]][three[-1]] = {}
         str_key = "three"
-        management_insert(three_id[-1], three[-1], two_id[-1])
+        management_insert(three_id[-1], three[-1], two_id[-1])#db
 
     else:
         if str_key == "one":
             if org not in dict_total_my[one[-1]].keys():
                 dict_total_my[one[-1]][org] = [my_dict_value]
                 post_id.append(i + 1)
-                post_insert(id=post_id[-1], name=org, id_department=one_id[-1])
+                post_insert(id=post_id[-1], name=org, id_department=one_id[-1])#db
             else:
                 dict_total_my[one[-1]][org] += [my_dict_value]
 
@@ -86,7 +80,7 @@ for i in range(0, 170):
                     id=post_id[-1],
                     name=org,
                     id_mini_departament=two_id[-1],
-                )
+                )#db
 
             else:
                 dict_total_my[one[-1]][two[-1]][org] += [my_dict_value]
@@ -95,7 +89,7 @@ for i in range(0, 170):
             if org not in dict_total_my[one[-1]][two[-1]][three[-1]].keys():
                 dict_total_my[one[-1]][two[-1]][three[-1]][org] = [my_dict_value]
                 post_id.append(i + 1)
-                post_insert(id=post_id[-1], name=org, id_management=three_id[-1])
+                post_insert(id=post_id[-1], name=org, id_management=three_id[-1])#db
 
             else:
                 dict_total_my[one[-1]][two[-1]][three[-1]][org] += [my_dict_value]
@@ -108,7 +102,7 @@ for i in range(0, 170):
             phonenumber=str(phone),
             room=str(kabinet),
             email=email,
-        )
+        )#db
 
 
 pprint(dict_total_my)

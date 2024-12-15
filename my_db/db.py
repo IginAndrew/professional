@@ -3,7 +3,7 @@ import sqlite3
 
 def get_connection():
     try:
-        con = sqlite3.connect("base.db")
+        con = sqlite3.connect("my_db/base.db")
         con.row_factory = sqlite3.Row
         print("Успешное подключение!")
         return con
@@ -18,7 +18,7 @@ def create_tables_department():
         c.execute(
             """
         CREATE TABLE IF NOT EXISTS Department (
-            id INTEGER NOT NULL PRIMARY KEY,
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             UNIQUE ("name") ON CONFLICT IGNORE
         );
@@ -57,7 +57,7 @@ def create_tables_mini_department():
         c.execute(
             """
         CREATE TABLE IF NOT EXISTS Mini_department (
-            id INTEGER NOT NULL PRIMARY KEY,
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             name TEXT,
             id_department INTEGER NOT NULL,
             FOREIGN KEY (id_department) REFERENCES Department(id)
@@ -99,7 +99,7 @@ def create_tables_management():
         c.execute(
             """
         CREATE TABLE IF NOT EXISTS Management (
-            id INTEGER NOT NULL PRIMARY KEY,
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             name TEXT,
             id_mini_departament INTEGER NOT NULL,
             FOREIGN KEY (id_mini_departament) REFERENCES Mini_department(id)
@@ -139,7 +139,7 @@ def create_tables_post():
         c.execute(
             """
         CREATE TABLE IF NOT EXISTS Post (
-            id INTEGER NOT NULL PRIMARY KEY,
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             name TEXT,
             id_department INTEGER,
             id_mini_departament INTEGER,
@@ -186,7 +186,7 @@ def create_tables_user():
         c.execute(
             """
         CREATE TABLE IF NOT EXISTS User (
-            id INTEGER NOT NULL PRIMARY KEY,
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             id_post INTEGER,
             birthday TEXT,
@@ -237,9 +237,55 @@ def create_tables_date():
         c.execute(
             """
                 CREATE TABLE IF NOT EXISTS WorkingCalendar(
-                    Id INTEGER NOT NULL PRIMARY KEY,
+                    Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                     ExceptionDate DATE,
                     IsWorkingDay TEXT
+                );
+                """
+        )
+        con.commit()
+
+def create_tables_calendar():
+    con = get_connection()
+    with con:
+        c = con.cursor()
+        c.execute(
+            """
+                CREATE TABLE IF NOT EXISTS Calendar(
+                    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                    date_training DATE
+                );
+                """
+        )
+        con.commit()
+
+def create_tables_training():
+    con = get_connection()
+    with con:
+        c = con.cursor()
+        c.execute(
+            """
+                CREATE TABLE IF NOT EXISTS Training(
+                    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                    name_training TEXT,
+                    id_calendar INTEGER,
+                    FOREIGN KEY (id_calendar) REFERENCES Calendar(id)
+                );
+                """
+        )
+        con.commit()
+
+def create_tables_out():
+    con = get_connection()
+    with con:
+        c = con.cursor()
+        c.execute(
+            """
+                CREATE TABLE IF NOT EXISTS Out(
+                    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                    name_out TEXT,
+                    id_calendar INTEGER,
+                    FOREIGN KEY (id_calendar) REFERENCES Calendar(id)
                 );
                 """
         )
@@ -253,11 +299,11 @@ def create_tables_id_info_date_id_user():
         c.execute(
             """
         CREATE TABLE IF NOT EXISTS Id_info_date_id_user (
-            id INTEGER NOT NULL PRIMARY KEY,
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             id_user INTEGER,
-            id_date INTEGER,
+            id_calendar INTEGER,
             FOREIGN KEY (id_user) REFERENCES User(id),
-            FOREIGN KEY (id_date) REFERENCES WorkingCalendar(Id)
+            FOREIGN KEY (id_calendar) REFERENCES Calendar(id)
         );
         """
         )
@@ -296,7 +342,7 @@ def create_tables_helper():
         c.execute(
             """
                 CREATE TABLE IF NOT EXISTS Helper (
-                    id INTEGER NOT NULL PRIMARY KEY,
+                    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                     name TEXT
                 );
                 """
@@ -311,7 +357,7 @@ def create_tables_id_helper_id_user():
         c.execute(
             """
             CREATE TABLE IF NOT EXISTS Id_helper_id_user (
-                    id INTEGER NOT NULL PRIMARY KEY,
+                    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                     id_helper INTEGER,
                     id_user INTEGER,
                     FOREIGN KEY (id_helper) REFERENCES Helper(id),
@@ -333,6 +379,9 @@ if __name__ == "__main__":
     create_tables_post()
     create_tables_user()
     create_tables_date()
+    create_tables_calendar()
+    create_tables_training()
+    create_tables_out()
     create_tables_id_info_date_id_user()
     create_tables_helper()
     create_tables_id_helper_id_user()
