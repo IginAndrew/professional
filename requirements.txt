@@ -1,5 +1,9 @@
 openpyxl
 pandas
+uvicorn
 fastapi
 passlib
 jose
+bcrypt==4.0.1
+pyjwt
+python-multipart
