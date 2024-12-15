@@ -268,6 +268,7 @@ def create_tables_training():
                 CREATE TABLE IF NOT EXISTS Training(
                     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                     name_training TEXT,
+                    info TEXT,
                     id_calendar INTEGER,
                     FOREIGN KEY (id_calendar) REFERENCES Calendar(id)
                 );
@@ -284,6 +285,28 @@ def create_tables_out():
                 CREATE TABLE IF NOT EXISTS Out(
                     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                     name_out TEXT,
+                    info TEXT,
+                    id_calendar INTEGER,
+                    FOREIGN KEY (id_calendar) REFERENCES Calendar(id)
+                );
+                """
+        )
+        con.commit()
+
+def create_tables_event():
+    con = get_connection()
+    with con:
+        c = con.cursor()
+        c.execute(
+            """
+                CREATE TABLE IF NOT EXISTS Event(
+                    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                    name_event TEXT,
+                    type_event TEXT,
+                    status_event BOOLEAN,
+                    time_event TEXT,
+                    responsible_persons TEXT,
+                    info TEXT,
                     id_calendar INTEGER,
                     FOREIGN KEY (id_calendar) REFERENCES Calendar(id)
                 );
@@ -382,6 +405,7 @@ if __name__ == "__main__":
     create_tables_calendar()
     create_tables_training()
     create_tables_out()
+    create_tables_event()
     create_tables_id_info_date_id_user()
     create_tables_helper()
     create_tables_id_helper_id_user()
