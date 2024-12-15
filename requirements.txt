@@ -1,3 +1,5 @@
 openpyxl
 pandas
 fastapi
+passlib
+jose
