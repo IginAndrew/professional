@@ -1,5 +1,6 @@
 .venv
 .idea
+.linuxvenv
 app/__pycache__
 app/*/__pycache__
 /.dockerignore
