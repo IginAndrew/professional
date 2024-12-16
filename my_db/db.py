@@ -109,7 +109,7 @@ def minidepartment_insert(id, name, id_departament):
         c.execute(
             """
                   INSERT INTO Mini_departament (id, name, id_departament) values
-                  (?,?);
+                  (?,?,?);
                   """,
             (
                 id,
@@ -120,19 +120,19 @@ def minidepartment_insert(id, name, id_departament):
         con.commit()
     return c.lastrowid
 
-def managmente_insert(id, name, id_minidepartament):
+def managmente_insert(id, name, id_mini_departament):
     con = getconnection()
     with con:
         c = con.cursor()
         c.execute(
             """
-                  INSERT INTO Menegmante (id, name, id_minidepartament) values
-                  (?,?);
+                  INSERT INTO Menegmante (id, name, id_mini_departament) values
+                  (?,?,?);
                   """,
             (
                 id,
                 name,
-                id_minidepartament,
+                id_mini_departament,
             ),
         )
         con.commit()
@@ -144,7 +144,7 @@ def post_insert(id, name, id_departament=0, id_mini_departament=0, id_menegmante
         c = con.cursor()
         c.execute(
             """
-                  INSERT INTO Menegmante (id, name, id_departament, id_mini_departament, id_menegmante) values
+                  INSERT INTO Post (id, name, id_departament, id_mini_departament, id_menegmante) values
                   (?,?,?,?,?);
                   """,
             (
@@ -156,7 +156,6 @@ def post_insert(id, name, id_departament=0, id_mini_departament=0, id_menegmante
             ),
         )
         con.commit()
-    print(c.lastrowid)
     return c.lastrowid
 
 def user_insert(id,name, birthday,phone,room,email,info,id_post):
@@ -182,9 +181,8 @@ def user_insert(id,name, birthday,phone,room,email,info,id_post):
         con.commit()
 
 if __name__ == '__main__':
-    # create_departament()
-    # create_minidepartament()
-    # create_menegmante()
-    # create_post()
-    # create_user()
-    department_insert(1, 'test')
+    create_departament()
+    create_minidepartament()
+    create_menegmante()
+    create_post()
+    create_user()

@@ -39,7 +39,7 @@ for i in range(0,170):
 
     elif points == 3:
 
-        id_mang= managmente_insert(i, name=org, id_minidepartament=id_minidepartaments[-1])
+        id_mang= managmente_insert(i, name=org, id_mini_departament=id_minidepartaments[-1])
         id_managments.append(id_mang)
 
         last_list = id_managments
@@ -53,5 +53,5 @@ for i in range(0,170):
         elif last_list == id_managments:
             ip_post= post_insert(i, name=org,id_menegmante=id_managments[-1])
 
-        user_insert(i, name=name, birthday=birthday, phone=phone, room=room, email=email, id_post=ip_post)
+        user_insert(i, name=name, birthday=str(birthday), phone=phone, room=room, email=email, id_post=ip_post, info="test")
 
