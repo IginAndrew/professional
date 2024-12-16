@@ -1,4 +1,6 @@
 import sqlite3
+from logging import lastResort
+
 
 def getconnection():
     con=sqlite3.connect('base.db')
@@ -82,11 +84,107 @@ def create_user():
             ''')
         con.commit()
 
+def department_insert(id, name):
+        con = getconnection()
+        with con:
+            c = con.cursor()
+            c.execute(
+                """
+                      INSERT INTO Departament (id, name) values
+                      (?,?)
+                      """,
+                (
+                    id,
+                    name,
+                ),
+            )
+            con.commit()
+        return c.lastrowid
 
+
+def minidepartment_insert(id, name, id_departament):
+    con = getconnection()
+    with con:
+        c = con.cursor()
+        c.execute(
+            """
+                  INSERT INTO Mini_departament (id, name, id_departament) values
+                  (?,?);
+                  """,
+            (
+                id,
+                name,
+                id_departament,
+            ),
+        )
+        con.commit()
+    return c.lastrowid
+
+def managmente_insert(id, name, id_minidepartament):
+    con = getconnection()
+    with con:
+        c = con.cursor()
+        c.execute(
+            """
+                  INSERT INTO Menegmante (id, name, id_minidepartament) values
+                  (?,?);
+                  """,
+            (
+                id,
+                name,
+                id_minidepartament,
+            ),
+        )
+        con.commit()
+
+
+def post_insert(id, name, id_departament=0, id_mini_departament=0, id_menegmante=0):
+    con = getconnection()
+    with con:
+        c = con.cursor()
+        c.execute(
+            """
+                  INSERT INTO Menegmante (id, name, id_departament, id_mini_departament, id_menegmante) values
+                  (?,?,?,?,?);
+                  """,
+            (
+                id,
+                name,
+                id_departament,
+                id_mini_departament,
+                id_menegmante,
+            ),
+        )
+        con.commit()
+    print(c.lastrowid)
+    return c.lastrowid
+
+def user_insert(id,name, birthday,phone,room,email,info,id_post):
+    con = getconnection()
+    with con:
+        c = con.cursor()
+        c.execute(
+            """
+                  INSERT INTO User(id,name,birthday,phone,room,email,info,id_post) values
+                  (?,?,?,?,?,?,?,?);
+                  """,
+            (
+                id,
+                name,
+                birthday,
+                phone,
+                room,
+                email,
+                info,
+                id_post,
+            ),
+        )
+        con.commit()
 
 if __name__ == '__main__':
-    create_departament()
-    create_minidepartament()
-    create_menegmante()
-    create_post()
-    create_user()
+    # create_departament()
+    # create_minidepartament()
+    # create_menegmante()
+    # create_post()
+    # create_user()
+    department_insert(1, 'test')
