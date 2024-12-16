@@ -12,7 +12,6 @@ id_managments=[]
 
 last_list = None
 
-
 for i in range(0,170):
     org=dict_total["Организация"][i]
     name=dict_total["Сотрудники"][i]
