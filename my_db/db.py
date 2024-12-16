@@ -43,7 +43,7 @@ def department_insert(id, name):
             ),
         )
         con.commit()
-        return c.lastrowid()
+        return c.lastrowid
     except sqlite3.Error as error:
         print("Ошибка при работе sql department_insert", error)
 
@@ -86,7 +86,7 @@ def mini_department_insert(id, name, id_department):
             ),
         )
         con.commit()
-        return c.lastrowid()
+        return c.lastrowid
     except sqlite3.Error as error:
         print("Ошибка при работе sql mini_department_insert", error)
 
@@ -129,7 +129,7 @@ def management_insert(id, name, id_mini_departament):
             ),
         )
         con.commit()
-        return c.lastrowid()
+        return c.lastrowid
     except sqlite3.Error as error:
         print("Ошибка при работе sql management_insert", error)
 
@@ -175,7 +175,7 @@ def post_insert(id, name, id_department=0, id_mini_departament=0, id_management=
             ),
         )
         con.commit()
-        return c.lastrowid()
+        return c.lastrowid
     except sqlite3.Error as error:
         print("Ошибка при работе sql post_insert", error)
 
@@ -400,16 +400,16 @@ def create_tables_id_helper_id_user():
 
 if __name__ == "__main__":
     pass
-    # create_tables_department()
-    # create_tables_mini_department()
-    # create_tables_management()
-    # create_tables_post()
-    # create_tables_user()
-    # create_tables_date()
-    # create_tables_calendar()
-    # create_tables_training()
-    # create_tables_out()
-    # create_tables_event()
-    # create_tables_id_info_date_id_user()
-    # create_tables_helper()
-    # create_tables_id_helper_id_user()
+    create_tables_department()
+    create_tables_mini_department()
+    create_tables_management()
+    create_tables_post()
+    create_tables_user()
+    create_tables_date()
+    create_tables_calendar()
+    create_tables_training()
+    create_tables_out()
+    create_tables_event()
+    create_tables_id_info_date_id_user()
+    create_tables_helper()
+    create_tables_id_helper_id_user()

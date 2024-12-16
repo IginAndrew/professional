@@ -26,7 +26,7 @@ for i in range(0,170):
 
         print(org, "департамент")
 
-        id_dep = department_insert(id, name=org)
+        id_dep = department_insert(i, name=org)
         id_departament.append(id_dep)
 
         last_list = id_departament
@@ -35,7 +35,7 @@ for i in range(0,170):
 
         print(org, "минидепартамент")
 
-        id_minidep = mini_department_insert(id, name=org, id_department=id_departament[-1])
+        id_minidep = mini_department_insert(i, name=org, id_department=id_departament[-1])
         id_minidepartment.append(id_minidep)
 
         last_list = id_minidepartment
@@ -44,8 +44,8 @@ for i in range(0,170):
 
         print(org, "менджмент")
 
-        id_manegment = management_insert(id, name=org, id_mini_departament=id_minidepartment[-1])
-        id_manegment.append(id_manegment)
+        id_maneg = management_insert(i, name=org, id_mini_departament=id_minidepartment[-1])
+        id_manegment.append(id_maneg)
 
         last_list = id_manegment
 
@@ -53,15 +53,14 @@ for i in range(0,170):
 
 
         if last_list == id_departament:
-            id_post = post_insert(id, name=org, id_department=id_departament[-1])
+            id_post = post_insert(i, name=org, id_department=id_departament[-1])
 
         elif last_list == id_minidepartment:
-            id_post = post_insert(id, name=org, id_department=id_minidepartment[-1], id_mini_departament=id_minidepartment[-1])
+            id_post = post_insert(i, name=org, id_mini_departament=id_minidepartment[-1])
 
         elif last_list == id_manegment:
-            id_post = post_insert(id, name=org, id_department=id_manegment[-1], id_mini_departament=id_manegment[-1], id_manegment=id_manegment[-1])
+            id_post = post_insert(i, name=org, id_management=id_manegment[-1])
 
-
-        user_insert(id=id, name=org, id_post=id_post, birthday=birthday, phonenumber=phone, room=kabinet, email=email, info="test info")
+        user_insert(id=i, name=name, id_post=id_post, birthday=str(birthday), phonenumber=phone, room=kabinet, email=email, info="test info")
 
         print(org, "неизвестно")
