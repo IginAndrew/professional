@@ -6,3 +6,6 @@ def date():
     response = requests.get(url)
     with open("python_request.zip", "wb") as code:
         code.write(response.content)
+
+if __name__ == "__main__":
+    date()
