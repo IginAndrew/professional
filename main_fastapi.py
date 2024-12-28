@@ -163,10 +163,9 @@ def create_documents_id(
         documentId: int, text: str, date_created: str, date_updated: str, name: str, position: str
 ):
     if documentId == doc[documentId - 1]["id"]:
-        comment.insert(
-            0,
+        comment.append(
             {
-                "id": int(comment[0]["id"] + 1),
+                "id": int(comment[-1]["id"] + 1),
                 "document_id": documentId,
                 "text": text,
                 "date_created": date_created,
