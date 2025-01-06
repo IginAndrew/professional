@@ -2,6 +2,9 @@ from fastapi import FastAPI, HTTPException, status, Depends
 
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.context import CryptContext
+
+from my_db.select_db import select_user
+
 # import jwt
 
 app = FastAPI()
@@ -175,6 +178,13 @@ def create_documents_id(
     else:
         raise HTTPException(status_code=404, detail=error[0])
 
+#----------------------------------------------для 4 сессии----------------------------------------------
 
-"""uvicorn main:app --reload"""  # запуск сервера
+@app.get("/user_work")
+def user_work():
+    user = select_user()
+    return user
+
+
+"""uvicorn main_fastapi:app --reload"""  # запуск сервера
 """http://127.0.0.1:8000/docs#/"""  # посмотреть документацию

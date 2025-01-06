@@ -5,17 +5,8 @@ from my_db.select_db import select_user_management, select_user_department, sele
 
 
 def main(page: ft.Page):
-    # page.window_width = 1000  # ширина окна равна 200 пикселям
-    # page.window_height = 600  # высота окна равна 400 пикселям
-    # page.window_resizable = False  # размер окна нельзя изменять
     page.title = "Дороги России"  # заголовок окна
-    # page.vertical_alignment = ft.MainAxisAlignment.CENTER# вертикальное выравнивание
-    # page.horizontal_alignment = ft.MainAxisAlignment.CENTER# горизонтальное выравнивание
-    # page.horizontal_alignment = ft.CrossAxisAlignment.START
     page.theme_mode = ft.ThemeMode.LIGHT
-    page.padding = 0
-
-    # page.scroll = "adaptive"
 
     add = ft.FloatingActionButton(icon=ft.Icons.ADD, bgcolor=ft.Colors.LIME_100, mini=True)
 
