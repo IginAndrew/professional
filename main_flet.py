@@ -14,15 +14,8 @@ def main(page: ft.Page):
     page.title = "Дороги России"  # заголовок окна
     page.theme_mode = ft.ThemeMode.LIGHT
 
-    add = ft.FloatingActionButton(
-        icon=ft.Icons.ADD, bgcolor=ft.Colors.LIME_100, mini=True
-    )
-
     def card(otdel: str, position: str, name: str, phone: str, mail: str, work: str):
-        c = ft.Column(
-            [
-                ft.Card(
-                    ft.Container(
+        c = ft.Card(
                         ft.Column(
                             [
                                 ft.Row(
@@ -47,15 +40,9 @@ def main(page: ft.Page):
                                 ft.Row([ft.Text(work)]),
                             ]
                         ),
-                        bgcolor="#e1f4c7",
-                        width=550,
+                        color="#e1f4c7",
+                        width=700,
                         height=150,
-                        padding=20,
-                    )
-                ),
-            ],
-            alignment=ft.MainAxisAlignment.CENTER,
-            scroll=ft.ScrollMode.ALWAYS,
         )
         return c
 
@@ -319,7 +306,6 @@ def main(page: ft.Page):
                             margin=10,
                             padding=20,
                         ),
-                        ft.Row([add]),
                         ft.Container(
                             card_total_ft,
                             bgcolor="#d9d9d9",
