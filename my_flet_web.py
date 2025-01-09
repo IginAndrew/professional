@@ -152,7 +152,7 @@ def main(page: ft.Page):
                 ft.Text("Сотрудники", style=ft.TextStyle(color="black", size=30)),
                 ft.Container(
                     card_user_ft,
-                    height=130,
+                    height=150,
                     margin=10,
                 ),
                 ft.Row(
