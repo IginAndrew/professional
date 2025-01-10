@@ -2,6 +2,7 @@ import flet as ft
 import datetime
 from datetime import date
 from my_db.select_db import select_user
+from request_file import info_user
 
 
 def card(name: str, email: str, phonenumber: str, post_name: str, birthday: str):
@@ -63,8 +64,8 @@ card_total_user = [
         post_name=i["post_name"],
         birthday=i["birthday"],
     )
-    for i in select_user()
-]  # изменить на внешний API
+    for i in info_user()
+]  # функция из request_file.py которая работает с fastapi
 
 card_total_news = [
     card_news(

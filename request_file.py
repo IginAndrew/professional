@@ -26,4 +26,4 @@ if __name__ == "__main__":
     pass
     # data()
     # print(info_news())
-    pprint(info_user())
+    # print([i['name'] for i in info_user()])
