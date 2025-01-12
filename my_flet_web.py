@@ -1,6 +1,8 @@
 import flet as ft
 import datetime
 from datetime import date
+
+from CustomCalendar import CustomCalendar
 from my_db.select_db import select_user
 from request_file import info_user
 
@@ -64,7 +66,7 @@ card_total_user = [
         post_name=i["post_name"],
         birthday=i["birthday"],
     )
-    for i in info_user()
+    for i in select_user()
 ]  # функция из request_file.py которая работает с fastapi
 
 card_total_news = [
@@ -101,8 +103,20 @@ card_total_big_news = [
 card_user_ft = ft.Row(scroll=ft.ScrollMode.ALWAYS, controls=card_total_user)
 card_news_ft = ft.Column(scroll=ft.ScrollMode.ALWAYS, controls=card_total_news)
 ard_big_news_ft = ft.Row(wrap=True, controls=card_total_big_news)
+# --------------------------------------------------------------------------
+my_calendar = CustomCalendar(
+    width=250,
+    bgcolor="#71a95a",
+    font_color="#ffffff",
+    hover_color="#34d409",
+    font_color_accent="#84ff17",
+    accent_color="#d2334c",
+    header_font_color="#ffffff",
+)
+my_calendar_custom = ft.Row(controls=[my_calendar])
 
 
+# ------------------------------------------------------------------------
 def main(page: ft.Page):
     page.title = "Дороги России"  # заголовок окна
     page.theme_mode = ft.ThemeMode.LIGHT
@@ -165,6 +179,7 @@ def main(page: ft.Page):
                                         "Календарь событий",
                                         style=ft.TextStyle(color="black", size=30),
                                     ),
+                                    my_calendar_custom,
                                     ft.Button(text="Показать календарь", on_click=calc),
                                     ft.Text(
                                         "События",
