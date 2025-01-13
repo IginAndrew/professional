@@ -22,8 +22,19 @@ def info_news():
     dict_res = response.json()
     return dict_res
 
+#-------------------5 сессия-------------------------------
+
+def info_calendar():
+    url = "http://127.0.0.1:8000/calendar"
+    response = requests.get(url)
+    dict_res = response.json()
+    return dict_res
+
+
+
+
 if __name__ == "__main__":
     pass
     # data()
     # print(info_news())
-    # print([i['name'] for i in info_user()])
+    print([i['date_training'] for i in info_calendar()])

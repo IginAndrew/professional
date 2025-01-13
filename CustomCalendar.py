@@ -1,6 +1,10 @@
 import datetime, calendar
+from calendar import month
+
 import flet
 import copy
+
+from request_file import info_calendar
 
 
 class CustomCalendar(flet.Container):
@@ -196,6 +200,7 @@ class CustomCalendar(flet.Container):
                 continue
             # Проходим по каждому столбцу в строке
             for column_id, column in enumerate(row.controls):
+
                 # Если текущий день меньше первого дня месяца, устанавливаем значение текста в столбце на "ꟷ"
                 if row_id - 2 == 0 and column_id < self._first_day_in_month:
                     column.content.value = "ꟷ"
@@ -210,6 +215,7 @@ class CustomCalendar(flet.Container):
                         and self._current_month == CustomCalendar._current_month
                         and self._current_year == CustomCalendar._current_year
                     ):
+
                         column.bgcolor = self.accent_color
                         column.content.color = self.font_accent_color
                         column.data = "today"
@@ -218,6 +224,24 @@ class CustomCalendar(flet.Container):
                         column.bgcolor = self.bgcolor
                         column.content.color = self.font_color
                         column.data = "just_a_day"
+
+#________________-цвет даты___________________--------------------------------------
+                    list_calendar = [i['date_training'] for i in info_calendar()]
+                    for cal in list_calendar:
+                        list_year = cal[:cal.find('-')]
+                        list_day = cal[cal.rfind('-')+1:]
+                        list_month = cal[cal.find('-')+1:cal.rfind('-')]
+                        if list_day[0] == '0' or list_month[0] == '0':
+                            list_day = list_day[1:]
+                            list_month = list_month[1:]
+                        if (day_counter == int(list_day)
+                        and self._current_month == int(list_month)
+                        and self._current_year == int(list_year)):
+                            column.bgcolor = 'green'
+                            column.content.color = 'blue'
+                            column.data = "event"
+#-----------------------------------------------------------------------------------
+
                     # Увеличиваем счетчик дней на 1
                     day_counter += 1
                 # Если счетчик дней больше последнего дня месяца, устанавливаем значение текста в столбце на "ꟷ"

@@ -3,7 +3,7 @@ from fastapi import FastAPI, HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.context import CryptContext
 
-from my_db.select_db import select_user
+from my_db.select_db import select_user, select_calendar
 
 # import jwt
 
@@ -184,6 +184,12 @@ def create_documents_id(
 def user_work():
     user = select_user()
     return user
+#----------------------------------для 5 сессии----------------------------------------------
+
+@app.get("/calendar")
+def user_work():
+    cal = select_calendar()
+    return cal
 
 
 """uvicorn main_fastapi:app --reload"""  # запуск сервера

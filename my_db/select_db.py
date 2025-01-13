@@ -195,6 +195,27 @@ def select_user():
         return res
     except sqlite3.Error as error:
         print("Ошибка при работе с SQLite", error)
+#----------------------------------------------5 сессия-----------------------------------------------
+
+def select_calendar():
+    try:
+        con = get_connection()
+        with con:
+            c = con.cursor()
+            res = c.execute(
+                """
+        SELECT date_training FROM Calendar
+        """
+            )
+            res = res.fetchall()
+        if not res:
+            print("не найден")
+            return False
+        return res
+    except sqlite3.Error as error:
+        print("Ошибка при работе с SQLite", error)
+
+
 
 
 if __name__ == "__main__":
