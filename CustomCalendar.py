@@ -237,8 +237,8 @@ class CustomCalendar(flet.Container):
                         if (day_counter == int(list_day)
                         and self._current_month == int(list_month)
                         and self._current_year == int(list_year)):
-                            column.bgcolor = 'green'
-                            column.content.color = 'blue'
+                            column.bgcolor = 'yellow'
+                            column.content.color = 'black'
                             column.data = "event"
 #-----------------------------------------------------------------------------------
 
