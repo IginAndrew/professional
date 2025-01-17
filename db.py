@@ -142,10 +142,94 @@ def insert_user(name, email, birthday, phone, room, info, id_post):
     con.commit()
     return c.lastrowid
 
+#-------------------------------------
+
+def create_helper():
+    c=get_connection()
+    c.execute('''CREATE TABLE IF NOT EXISTS Helper(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT
+    )''')
+    c.close()
+
+def create_id_user_id_helper():
+    c=get_connection()
+    c.execute('''CREATE TABLE IF NOT EXISTS Id_user_id_helper(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id_user INTEGER,
+        id_helper INTEGER,
+        FOREIGN KEY (id_user) REFERENCES User(id),
+        FOREIGN KEY (id_helper) REFERENCES Helper(id)
+    )''')
+    c.close()
+
+def create_calendar():
+    c=get_connection()
+    c.execute('''CREATE TABLE IF NOT EXISTS Calendar(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        date TEXT
+    )''')
+    c.close()
+
+def create_id_user_id_calendar():
+    c=get_connection()
+    c.execute('''CREATE TABLE IF NOT EXISTS Id_user_id_calendar(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id_user INTEGER,
+        id_calendar INTEGER,
+        FOREIGN KEY (id_user) REFERENCES User(id),
+        FOREIGN KEY (id_calendar) REFERENCES Calendar(id)
+    )''')
+    c.close()
+
+def create_out():
+    c=get_connection()
+    c.execute('''CREATE TABLE IF NOT EXISTS Out(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name_out TEXT,
+        info TEXT,
+        id_calendar INTEGER,
+        FOREIGN KEY (id_calendar) REFERENCES Calendar(id)
+    )''')
+    c.close()
+
+def create_training():
+    c=get_connection()
+    c.execute('''CREATE TABLE IF NOT EXISTS Training(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name_training TEXT,
+        info TEXT,
+        id_calendar INTEGER,
+        FOREIGN KEY (id_calendar) REFERENCES Calendar(id)
+    )''')
+    c.close()
+
+def create_event():
+    c=get_connection()
+    c.execute('''CREATE TABLE IF NOT EXISTS Event(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name_event TEXT,
+        type_event TEXT,
+        status_event BOOLEAN,
+        time_event TEXT,
+        responsible_person TEXT,
+        info TEXT,
+        id_calendar INTEGER,
+        FOREIGN KEY (id_calendar) REFERENCES Calendar(id)
+    )''')
+    c.close()
+
 if __name__ == '__main__':
     create_table_departament()
     create_table_mini_departament()
     create_table_managment()
     create_post()
     create_user()
+    create_helper()
+    create_id_user_id_helper()
+    create_calendar()
+    create_id_user_id_calendar()
+    create_out()
+    create_training()
+    create_event()
 
