@@ -3,7 +3,7 @@ from pprint import pprint
 
 
 def data():
-    url = "https://andrew79.pythonanywhere.com/download/python_request.zip"
+    url = "https://andrew79.pythonanywhere.com/d/python_request.zip"
     response = requests.get(url)
     with open("python_request.zip", "wb") as code:
         code.write(response.content)
@@ -35,6 +35,6 @@ def info_calendar():
 
 if __name__ == "__main__":
     pass
-    # data()
+    data()
     # print(info_news())
-    print([i['date_training'] for i in info_calendar()])
+    # print([i['date_training'] for i in info_calendar()])
