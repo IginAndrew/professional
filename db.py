@@ -415,7 +415,25 @@ def select_managment_all(name):
     return res
 
 
+def select_all():
+    con = get_connection()
+    with con:
+        c = con.cursor()
+        res = c.execute(
+            """
+                SELECT User.* ,Post.name as post_name FROM User
+                JOIN Post ON User.id_post = Post.id
+                """
+        )
+        res = res.fetchall()
+    if not res:
+        print("не найден")
+        return False
+    return res
+
+
 if __name__ == "__main__":
+    pass
     # create_table_departament()
     # create_table_mini_departament()
     # create_table_managment()
@@ -428,4 +446,4 @@ if __name__ == "__main__":
     # create_out()
     # create_training()
     # create_event()
-    print(select_admin_departament("1. Административный департамент"))
+    # print(select_admin_departament("1. Административный департамент"))
