@@ -114,5 +114,5 @@ def comment(
         raise HTTPException(status_code=404, detail=er[0])
 
 
-"""uvicorn main_fastapi:app --reload"""  # запуск сервера
+"""uvicorn main_FA:app --reload"""  # запуск сервера
 """http://127.0.0.1:8000/docs#/"""  # посмотреть документацию

@@ -3,6 +3,13 @@ from pprint import pprint
 import requests
 
 
+def data():
+    url = "https://andrew79.pythonanywhere.com/d/python_request.zip"
+    response = requests.get(url)
+    with open("python_request.zip", "wb") as code:
+        code.write(response.content)
+
+
 def users_departament_req():
     url = "http://127.0.0.1:8000/users_departament"
     response = requests.get(url)
@@ -46,5 +53,6 @@ def select_managment_all_req(name):
 
 
 if __name__ == "__main__":
-    pprint(users_departament_req())
-    pprint(users_admin_departament_req("1. Административный департамент"))
+    # pprint(users_departament_req())
+    # pprint(users_admin_departament_req("1. Административный департамент"))
+    data()
