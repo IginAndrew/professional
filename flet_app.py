@@ -1,6 +1,8 @@
-from db import *
+# from db import *
 
 import flet as ft
+
+from requests_flet import *
 
 
 def main(page: ft.Page):
@@ -58,7 +60,7 @@ def main(page: ft.Page):
             mail=i["email"],
             work=i["info"],
         )
-        for i in select_departament()
+        for i in users_departament_req()
     ]
 
     card_total_mini_departament = [
@@ -70,7 +72,7 @@ def main(page: ft.Page):
             mail=i["email"],
             work=i["info"],
         )
-        for i in select_mini_departament()
+        for i in users_minidepartament_req()
     ]
 
     card_total_managment = [
@@ -82,7 +84,7 @@ def main(page: ft.Page):
             mail=i["email"],
             work=i["info"],
         )
-        for i in select_managment()
+        for i in users_managment_req()
     ]
 
     card_total_admin_departament = [
@@ -94,7 +96,7 @@ def main(page: ft.Page):
             mail=i["email"],
             work=i["info"],
         )
-        for i in select_admin_departament("1. Административный департамент")
+        for i in users_admin_departament_req("1. Административный департамент")
     ]
 
     card_total_academia = [
@@ -106,7 +108,7 @@ def main(page: ft.Page):
             mail=i["email"],
             work=i["info"],
         )
-        for i in select_admin_departament("2. Академия Умные дороги")
+        for i in users_admin_departament_req("2. Академия Умные дороги")
     ]
 
     card_total_dogovor = [
@@ -118,7 +120,7 @@ def main(page: ft.Page):
             mail=i["email"],
             work=i["info"],
         )
-        for i in select_mini_departament_all("1.2. Договорной отдел")
+        for i in select_mini_departament_all_req("1.2. Договорной отдел")
     ]
 
     card_total_obsh_otdel = [
@@ -130,7 +132,7 @@ def main(page: ft.Page):
             mail=i["email"],
             work=i["info"],
         )
-        for i in select_mini_departament_all("1.3. Общий отдел")
+        for i in select_mini_departament_all_req("1.3. Общий отдел")
     ]
 
     card_total_license_otdel = [
@@ -142,7 +144,7 @@ def main(page: ft.Page):
             mail=i["email"],
             work=i["info"],
         )
-        for i in select_managment_all("5.2.1. Лицензионный отдел")
+        for i in select_managment_all_req("5.2.1. Лицензионный отдел")
     ]
 
     card_total_uprav_market = [
@@ -154,7 +156,7 @@ def main(page: ft.Page):
             mail=i["email"],
             work=i["info"],
         )
-        for i in select_managment_all("5.2.2. Управление маркетинга")
+        for i in select_managment_all_req("5.2.2. Управление маркетинга")
     ]
 
     def card_road_of_russia(e):
